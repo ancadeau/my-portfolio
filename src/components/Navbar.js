@@ -2,20 +2,51 @@ import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import portfolio_light from "../Assets/portfolio_light.png";
+import portfolio_dark from "../Assets/portfolio_dark.png";
+import { Icon } from '@iconify/react';
+import MyMUISwitch from "./MUISwitch";
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleDarkMode } from '../features/darkmode/Darkmode'
 
-function NavbarComponent() {
-    <Navbar>
-        <Navbar.Header>
-            <Navbar.Brand>
-                <a href="#home">CV</a>
-            </Navbar.Brand>
-        </Navbar.Header>
-        <Nav>
-            <NavItem eventKey={1} href="#">
-                Test
-            </NavItem>
-        </Nav>
-    </Navbar>;
+export function NavBar() {
+    const darkModeVal = useSelector(state => state.darkmode.value)
+    const dispatch = useDispatch()
+
+    return (
+        <Navbar bg={(darkModeVal) ? "dark" : "light"} variant={(darkModeVal) ? "dark" : "light"} expand="sm">
+            <Container>
+                <Navbar.Brand className="ml-auto">
+                    <MyMUISwitch checked={darkModeVal} onChange={_ => dispatch(toggleDarkMode(darkModeVal))}/>
+                </Navbar.Brand>
+                <Navbar.Brand href="#">
+                    <img src={(darkModeVal) ? portfolio_dark : portfolio_light} width="30" height="30" alt="portfolio_img" /> {' '}
+                    Portfolio
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="navbarScroll" />
+                <Navbar.Collapse id="navbarScroll">
+                    <Nav className="ms-auto my-2 my-lg-0">
+                        <Nav.Link href="#">
+                            <Icon icon="ant-design:home-outlined" inline={true} /> {''}
+                            Home
+                        </Nav.Link>
+                        <Nav.Link href="#">
+                            <Icon icon="carbon:user-profile" inline={true} /> {''}
+                            About
+                        </Nav.Link>
+                        <Nav.Link href="#">
+                            <Icon icon="bi:file-earmark-code" inline={true} /> {''}
+                            Projects
+                        </Nav.Link>
+                        <Nav.Link href="#">
+                            <Icon icon="ant-design:file-text-twotone" inline={true} /> {''}
+                            Resume
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
 }
 
-export default NavbarComponent;
+export default NavBar;
