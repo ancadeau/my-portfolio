@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  --background: rgb(217, 104,70);
+  --text-primary: rgb(203, 205, 214);
+  --text-secondary: rgb(89,98,53);
+  --accent: rgb(47,48,32);
+}
+
+[data-theme='dark'] {
+  --background: rgb(52, 50, 41);
+  --text-primary: rgb(38, 151, 185);
+  --text-secondary: rgb(166,157,202);
+  --accent: rgb(208,207,223);
+}

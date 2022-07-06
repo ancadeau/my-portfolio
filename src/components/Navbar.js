@@ -14,7 +14,7 @@ export function NavBar() {
     const dispatch = useDispatch()
 
     return (
-        <Navbar bg={(darkModeVal) ? "dark" : "light"} variant={(darkModeVal) ? "dark" : "light"} expand="sm">
+        <Navbar className='top-navbar' bg={(darkModeVal) ? "dark" : "light"} variant={(darkModeVal) ? "dark" : "light"} expand="sm" fixed="top">
             <Container>
                 <Navbar.Brand className="ml-auto">
                     <MyMUISwitch checked={darkModeVal} onChange={_ => dispatch(toggleDarkMode(darkModeVal))}/>
@@ -26,19 +26,19 @@ export function NavBar() {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="ms-auto my-2 my-lg-0">
-                        <Nav.Link href="#">
+                        <Nav.Link href="/">
                             <Icon icon="ant-design:home-outlined" inline={true} /> {''}
                             Home
                         </Nav.Link>
-                        <Nav.Link href="#">
+                        <Nav.Link href="about">
                             <Icon icon="carbon:user-profile" inline={true} /> {''}
                             About
                         </Nav.Link>
-                        <Nav.Link href="#">
+                        <Nav.Link href="projects">
                             <Icon icon="bi:file-earmark-code" inline={true} /> {''}
                             Projects
                         </Nav.Link>
-                        <Nav.Link href="#">
+                        <Nav.Link href="resume">
                             <Icon icon="ant-design:file-text-twotone" inline={true} /> {''}
                             Resume
                         </Nav.Link>
