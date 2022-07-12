@@ -2,46 +2,78 @@ import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import portfolio_light from "../Assets/portfolio_light.png";
-import portfolio_dark from "../Assets/portfolio_dark.png";
+import logo_light from "../Assets/LOGO_LIGHT.png";
+import logo_dark from "../Assets/LOGO_DARK.png";
 import { Icon } from '@iconify/react';
 import MyMUISwitch from "./MUISwitch";
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDarkMode } from '../features/darkmode/Darkmode'
+import {
+    AiOutlineHome,
+    AiOutlineFundProjectionScreen,
+    AiOutlineUser,
+    AiOutlineFilePdf,
+  } from "react-icons/ai";
 
 export function NavBar() {
     const darkModeVal = useSelector(state => state.darkmode.value)
     const dispatch = useDispatch()
 
+    const [expand, updateExpanded] = useState(false);
+    const [navScrolling, updateNavbar] = useState(false);
+  
+    function scrollHandler() {
+      if (window.scrollY >= 20) {
+        updateNavbar(true);
+      } else {
+        updateNavbar(false);
+      }
+    }
+  
+    window.addEventListener("scroll", scrollHandler);
+
     return (
-        <Navbar className='top-navbar' bg={(darkModeVal) ? "dark" : "light"} variant={(darkModeVal) ? "dark" : "light"} expand="sm" fixed="top">
+        <Navbar
+        className={
+            navScrolling ? 
+            darkModeVal ? "dark-navbar-scroll" : "light-navbar-scroll"
+            : darkModeVal ? "dark-navbar" : "light-navbar"}
+        expand="sm"
+        expanded={expand}
+        fixed="top">
             <Container>
                 <Navbar.Brand className="ml-auto">
                     <MyMUISwitch checked={darkModeVal} onChange={_ => dispatch(toggleDarkMode(darkModeVal))}/>
                 </Navbar.Brand>
-                <Navbar.Brand href="#">
-                    <img src={(darkModeVal) ? portfolio_dark : portfolio_light} width="30" height="30" alt="portfolio_img" /> {' '}
-                    Portfolio
+                <Navbar.Brand href="/">
+                    <img src={(darkModeVal) ? logo_dark : logo_light} width="60" height="60" alt="portfolio_img" /> {' '}
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                    <Nav className="ms-auto my-2 my-lg-0">
-                        <Nav.Link href="/">
-                            <Icon icon="ant-design:home-outlined" inline={true} /> {''}
-                            Home
-                        </Nav.Link>
+                <Navbar.Toggle
+                aria-controls="responsive-navbar-nav"
+                onClick={() => {
+                    updateExpanded(expand ? false : "expanded");
+                }}
+                >
+                <span></span>
+                <span></span>
+                <span></span>
+                </Navbar.Toggle>
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="ms-auto">
+                        <Nav.Link 
+                        href="/"
+                        onClick={() => updateExpanded(false)}>
+                            <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
+                        </Nav.Link> {' '}
                         <Nav.Link href="about">
-                            <Icon icon="carbon:user-profile" inline={true} /> {''}
-                            About
-                        </Nav.Link>
+                            <AiOutlineUser style={{ marginBottom: "2px" }} /> About
+                        </Nav.Link> {' '}
                         <Nav.Link href="projects">
-                            <Icon icon="bi:file-earmark-code" inline={true} /> {''}
-                            Projects
-                        </Nav.Link>
+                            <AiOutlineFundProjectionScreen style={{ marginBottom: "2px" }} /> Projects
+                        </Nav.Link> {' '}
                         <Nav.Link href="resume">
-                            <Icon icon="ant-design:file-text-twotone" inline={true} /> {''}
-                            Resume
-                        </Nav.Link>
+                            <AiOutlineFilePdf style={{ marginBottom: "2px" }} /> Resume
+                        </Nav.Link> {' '}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

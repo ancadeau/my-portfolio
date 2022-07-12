@@ -9,6 +9,7 @@ import NavBar from './components/Navbar';import {
   Navigate
 } from "react-router-dom";
 import Home from './components/Home/Home';
+import "./style.css";
 
 function App() {
   return (
